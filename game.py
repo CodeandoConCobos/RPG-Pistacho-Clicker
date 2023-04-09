@@ -1,56 +1,72 @@
 import tkinter as tk
+from tkinter import ttk
 
 class RPGInterface:
     def __init__(self):
         self.window = tk.Tk()
-        self.window.title('RPG Interface')
+        self.window.title('RPG Pistachio Clicker')
         self.create_widgets()
+        
+        self.vida_text = tk.StringVar()
+        self.daño_text = tk.StringVar()
+        self.name_text = tk.StringVar()
+        self.defensa_text = tk.StringVar()
+        self.mana_text = tk.StringVar()
+        self.velocidad_text = tk.StringVar()
+        self.exp_text = tk.StringVar()
+        self.p_atributo_text = tk.StringVar()
+        self.p_habilidad_text = tk.StringVar()
+        self.hambre_text = tk.StringVar()
+        self.sed_text = tk.StringVar()
+
+        self.update_stat_values()  # actualizar los valores iniciales de las variables
         
         # Create labels and progress bars for each statistic
         # Name and base damage
         name_label = tk.Label(self.window, text="Name:")
-        name_label.grid(row=0, column=0)
-        self.name_text = tk.Text(self.window, height=1, width=20)
-        self.name_text.grid(row=0, column=1)
-        self.name_text.insert(tk.END, data['name'])
+        name_label.grid(row=0, column=0, sticky="E")
+        self.name_text.set(f"{data['name']}")
+        name_value_label = tk.Label(self.window, textvariable=self.name_text)
+        name_value_label.grid(row=0, column=1, sticky="W")
         
-        daño_label = tk.Label(self.window, text="Base Damage:")
-        daño_label.grid(row=1, column=0)
-        self.daño_text = tk.Text(self.window, height=1, width=20)
-        self.daño_text.grid(row=1, column=1)
-        self.daño_text.insert(tk.END, data['daño_base'])
+        daño_label = tk.Label(self.window, text="Daño:")
+        daño_label.grid(row=1, column=0, sticky="E")
+        self.daño_text.set(f"{data['daño_base']}")
+        daño_value_label = tk.Label(self.window, textvariable=self.daño_text)
+        daño_value_label.grid(row=1, column=1, sticky="W")
 
         # Health
-        vida_label = tk.Label(self.window, text="Health:")
-        vida_label.grid(row=2, column=0)
-        self.vida_progress = tk.Progressbar(self.window, orient=tk.HORIZONTAL,
-                                            length=100, mode='determinate')
-        self.vida_progress.grid(row=2, column=1)
+        vida_label = tk.Label(self.window, text="Vida:")
+        vida_label.grid(row=1, column=3, sticky="E")
+
+        self.vida_text.set(f"{data['vida']}/{data['vida_max']}")
+        vida_value_label = tk.Label(self.window, textvariable=self.vida_text)
+        vida_value_label.grid(row=0, column=4)
+
+        self.vida_progress = ttk.Progressbar(self.window, orient=tk.HORIZONTAL, length=100, mode='determinate')
+        self.vida_progress.grid(row=1, column=4)
         self.vida_progress['maximum'] = data['vida_max']
         self.vida_progress['value'] = data['vida']
 
         # Defense
-        defensa_label = tk.Label(self.window, text="Defense:")
-        defensa_label.grid(row=3, column=0)
-        self.defensa_progress = tk.Progressbar(self.window, orient=tk.HORIZONTAL,
-                                                length=100, mode='determinate')
-        self.defensa_progress.grid(row=3, column=1)
-        self.defensa_progress['maximum'] = data['defensa_max']
-        self.defensa_progress['value'] = data['defensa']
+        defensa_label = tk.Label(self.window, text="Defensa:")
+        defensa_label.grid(row=4, column=0)
+        self.defensa_text.set(f"{data['defensa']}/{data['defensa_max']}")
+        defensa_value_label = tk.Label(self.window, textvariable=self.defensa_text)
+        defensa_value_label.grid(row=4, column=1)
 
         # Mana
         mana_label = tk.Label(self.window, text="Mana:")
-        mana_label.grid(row=4, column=0)
-        self.mana_progress = tk.Progressbar(self.window, orient=tk.HORIZONTAL,
-                                            length=100, mode='determinate')
-        self.mana_progress.grid(row=4, column=1)
+        mana_label.grid(row=5, column=0, sticky="E")
+        self.mana_progress = ttk.Progressbar(self.window, orient=tk.HORIZONTAL, length=100, mode='determinate')
+        self.mana_progress.grid(row=5, column=1)
         self.mana_progress['maximum'] = data['mana_max']
         self.mana_progress['value'] = data['mana']
 
         # Speed
-        velocidad_label = tk.Label(self.window, text="Speed:")
+        velocidad_label = tk.Label(self.window, text="Velocidad:")
         velocidad_label.grid(row=5, column=0)
-        self.velocidad_progress = tk.Progressbar(self.window, orient=tk.HORIZONTAL,
+        self.velocidad_progress = ttk.Progressbar(self.window, orient=tk.HORIZONTAL,
                                                 length=100, mode='determinate')
         self.velocidad_progress.grid(row=5, column=1)
         self.velocidad_progress['maximum'] = data['velocidad_max']
@@ -59,7 +75,7 @@ class RPGInterface:
         # Experience
         exp_label = tk.Label(self.window, text="Experience:")
         exp_label.grid(row=6, column=0)
-        self.exp_progress = tk.Progressbar(self.window, orient=tk.HORIZONTAL,
+        self.exp_progress = ttk.Progressbar(self.window, orient=tk.HORIZONTAL,
                                             length=100, mode='determinate')
         self.exp_progress.grid(row=6, column=1)
         self.exp_progress['maximum'] = data['exp_max']
@@ -68,7 +84,7 @@ class RPGInterface:
         # Attribute points
         p_atributo_label = tk.Label(self.window, text="Attribute Points:")
         p_atributo_label.grid(row=7, column=0)
-        self.p_atributo_progress = tk.Progressbar(self.window, orient=tk.HORIZONTAL,
+        self.p_atributo_progress = ttk.Progressbar(self.window, orient=tk.HORIZONTAL,
                                         length=100, mode='determinate')
         self.p_atributo_progress.grid(row=7, column=1)
         self.p_atributo_progress['maximum'] = data['p_atributo_max']
@@ -77,7 +93,7 @@ class RPGInterface:
         # Skill points
         p_habilidad_label = tk.Label(self.window, text="Skill Points:")
         p_habilidad_label.grid(row=8, column=0)
-        self.p_habilidad_progress = tk.Progressbar(self.window, orient=tk.HORIZONTAL,
+        self.p_habilidad_progress = ttk.Progressbar(self.window, orient=tk.HORIZONTAL,
                                                     length=100, mode='determinate')
         self.p_habilidad_progress.grid(row=8, column=1)
         self.p_habilidad_progress['maximum'] = data['p_habilidad_max']
@@ -86,7 +102,7 @@ class RPGInterface:
         # Hunger
         hambre_label = tk.Label(self.window, text="Hunger:")
         hambre_label.grid(row=9, column=0)
-        self.hambre_progress = tk.Progressbar(self.window, orient=tk.HORIZONTAL,
+        self.hambre_progress = ttk.Progressbar(self.window, orient=tk.HORIZONTAL,
                                             length=100, mode='determinate')
         self.hambre_progress.grid(row=9, column=1)
         self.hambre_progress['maximum'] = data['hambre_max']
@@ -95,7 +111,7 @@ class RPGInterface:
         # Thirst
         sed_label = tk.Label(self.window, text="Thirst:")
         sed_label.grid(row=10, column=0)
-        self.sed_progress = tk.Progressbar(self.window, orient=tk.HORIZONTAL,
+        self.sed_progress = ttk.Progressbar(self.window, orient=tk.HORIZONTAL,
                                             length=100, mode='determinate')
         self.sed_progress.grid(row=10, column=1)
         self.sed_progress['maximum'] = data['sed_max']
@@ -104,7 +120,7 @@ class RPGInterface:
         # Happiness
         felicidad_label = tk.Label(self.window, text="Happiness:")
         felicidad_label.grid(row=11, column=0)
-        self.felicidad_progress = tk.Progressbar(self.window, orient=tk.HORIZONTAL,
+        self.felicidad_progress = ttk.Progressbar(self.window, orient=tk.HORIZONTAL,
                                                 length=100, mode='determinate')
         self.felicidad_progress.grid(row=11, column=1)
         self.felicidad_progress['maximum'] = data['felicidad_max']
@@ -113,7 +129,7 @@ class RPGInterface:
         # Sleep
         sueño_label = tk.Label(self.window, text="Sleep:")
         sueño_label.grid(row=12, column=0)
-        self.sueño_progress = tk.Progressbar(self.window, orient=tk.HORIZONTAL,
+        self.sueño_progress = ttk.Progressbar(self.window, orient=tk.HORIZONTAL,
                                             length=100, mode='determinate')
         self.sueño_progress.grid(row=12, column=1)
         self.sueño_progress['maximum'] = data['sueño_max']
@@ -122,7 +138,7 @@ class RPGInterface:
         # Stamina
         estamina_label = tk.Label(self.window, text="Stamina:")
         estamina_label.grid(row=13, column=0)
-        self.estamina_progress = tk.Progressbar(self.window, orient=tk.HORIZONTAL,
+        self.estamina_progress = ttk.Progressbar(self.window, orient=tk.HORIZONTAL,
                                                 length=100, mode='determinate')
         self.estamina_progress.grid(row=13, column=1)
         self.estamina_progress['maximum'] = data['estamina_max']
@@ -130,25 +146,36 @@ class RPGInterface:
 
         # Energy
         energia_label = tk.Label(self.window, text="Energy:")
-        energia_label.grid(row=14, column=0)
-        self.energia_progress = tk.Progressbar(self.window, orient=tk.HORIZONTAL,
+        energia_label.grid(row=0, column=10)
+        self.energia_progress = ttk.Progressbar(self.window, orient=tk.HORIZONTAL,
                                                 length=100, mode='determinate')
-        self.energia_progress.grid(row=14, column=1)
+        self.energia_progress.grid(row=0, column=11)
         self.energia_progress['maximum'] = data['energia_max']
         self.energia_progress['value'] = data['energia']
 
         # Set up update loop to refresh values every second
-        self.window.after(1000, self.update_stats)
+        self.window.after(1000, self.update_data)
         pass
 
     def create_widgets(self):
         # Create all the widgets and set up the layout
         pass
+    
+    def update_stat_values(self):
+        self.vida_text.set(f"{data['vida']}/{data['vida_max']}")
+        self.daño_text.set(f"{data['daño_base']}")
+        self.defensa_text.set(f"{data['defensa']}/{data['defensa_max']}")
+        self.mana_text.set(f"{data['mana']}/{data['mana_max']}")
+        self.velocidad_text.set(f"{data['velocidad']}/{data['velocidad_max']}")
+        self.exp_text.set(f"{data['exp']}/{data['exp_max']}")
+        self.p_atributo_text.set(f"{data['p_atributo']}/{data['p_atributo_max']}")
+        self.p_habilidad_text.set(f"{data['p_habilidad']}/{data['p_habilidad_max']}")
+        self.hambre_text.set(f"{data['hambre']}/{data['hambre_max']}")
+        self.sed_text.set(f"{data['sed']}/{data['sed_max']}")
 
     def update_data(self, data):
         # Update all the progress bars with new values from the data dictionary
         self.vida_progress['value'] = self.data['vida']
-        self.defensa_progress['value'] = self.data['defensa']
         self.mana_progress['value'] = self.data['mana']
         self.velocidad_progress['value'] = self.data['velocidad']
         self.nivel_label.config(text=f"Level: {self.data['nivel']}")
@@ -163,11 +190,29 @@ class RPGInterface:
         self.energia_progress['value'] = self.data['energia']
 
         # Schedule the update function to run again in 1 second
-        self.window.after(1000, self.update_stats)
+        self.window.after(1000, self.update_data)
         pass
 
     def run(self):
-        self.root.mainloop()
+        self.window.mainloop()
+        
+    def set_data(self, data):
+        self.vida_progress['maximum'] = data['vida_max']
+        self.vida_progress['value'] = data['vida']
+        self.mana_progress['maximum'] = data['mana_max']
+        self.mana_progress['value'] = data['mana']
+        self.velocidad_progress['maximum'] = data['velocidad_max']
+        self.velocidad_progress['value'] = data['velocidad']
+        self.exp_progress['maximum'] = data['exp_max']
+        self.exp_progress['value'] = data['exp']
+        self.p_atributo_progress['maximum'] = data['p_atributo_max']
+        self.p_atributo_progress['value'] = data['p_atributo']
+        self.p_habilidad_progress['maximum'] = data['p_habilidad_max']
+        self.p_habilidad_progress['value'] = data['p_habilidad']
+        self.hambre_progress['maximum'] = data['hambre_max']
+        self.hambre_progress['value'] = data['hambre']
+        self.sed_progress['maximum'] = data['sed_max']
+        self.sed_progress['value'] = data['sed']
 
 if __name__ == '__main__':
     # Create a dictionary with test data
